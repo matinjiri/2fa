@@ -1,0 +1,43 @@
+
+@baseUrl = http://localhost:3000
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hdGluQGdtYWlsLmNvbSIsImlzVHdvRmFjdG9yQXV0aGVudGljYXRpb25FbmFibGVkIjpmYWxzZSwiaXNUd29GYWN0b3JBdXRoZW50aWNhdGVkIjpmYWxzZSwiaWF0IjoxNzMxNDA1MzEzLCJleHAiOjE4MTc4MDUzMTN9.45FgXrOEP_N63sNSdUdiFhTUP9tj4vhrdSdWAGSaHuo
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hdGluQGdtYWlsLmNvbSIsImlzVHdvRmFjdG9yQXV0aGVudGljYXRpb25FbmFibGVkIjpmYWxzZSwiaXNUd29GYWN0b3JBdXRoZW50aWNhdGVkIjp0cnVlLCJpYXQiOjE3MzEzOTk3MzAsImV4cCI6MTczMTQ4NjEzMH0.mthMWMhWTkOEQPdrPlQddsk4VX742b88pW4sQqbmiwk
+
+GET http://localhost:3000 HTTP/1.1
+
+###{ data };
+POST {{baseUrl}}/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email" : "matin@gmail.com",
+  "password": "123456789"
+}
+
+###
+POST {{baseUrl}}/auth/2fa/generate HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+POST {{baseUrl}}/auth/2fa/authenticate HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "twoFactorAuthenticationCode": "323229"
+}
+
+###
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "email": "matin@gmail.com",
+  "password": "12345678"
+}
+
+### 
+GET {{baseUrl}}/auth/2fa/protected
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
